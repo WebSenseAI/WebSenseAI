@@ -26,6 +26,7 @@ export class WebSense extends LitElement {
         <chat-bubble></chat-bubble>
         <chat-input></chat-input>
       </chat-popup>
+      <open-button></open-button>
     `;
   }
 }
