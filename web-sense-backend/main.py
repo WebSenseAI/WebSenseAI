@@ -1,17 +1,15 @@
 from flask import Flask
-from openai_api.setup import client
-
+from openai_api.functions import generate_chat_completion
 app = Flask(__name__)
 
 
 @app.route("/")
-def hello_world():
-    completion = client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": "You are a poetic assistant, skilled in explaining complex programming concepts with creative flair."},
-            {"role": "user", "content": "Compose a poem that explains the concept of recursion in programming."}
-        ]
-    )
-    print(completion.choices[0].message)
+def main():
     return "<p>Hello, World!</p>"
+
+
+@app.route("/api")
+def api_route():
+    answer = generate_chat_completion("Who was the MVP of the 2020 World Series?")
+    print(answer.content)
+    return answer.content
