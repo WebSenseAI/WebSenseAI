@@ -13,20 +13,25 @@ export class ChatPopup extends LitElement {
         border-radius: 20px;
         display: none;
         z-index: 1000;
-        transform: translateY(-20px);
+        transform: translateY(50px);
     }
 
     .chat-popup.open{
         display: block;
-        animation: myAnimation 2s; 
+        animation: myAnimation 1s forwards; 
     }
 
     @keyframes myAnimation {
-      from {
-        transform: translateY(-20);
+      0% {
+        transform: translateY(-50);
+        opacity: 0;
       }
-      to {
+      50% {
+        opacity: 0.3;
+      }
+      100% {
         transform: translateY(0px);
+        opacity: 1;
       }
     }
   `;
