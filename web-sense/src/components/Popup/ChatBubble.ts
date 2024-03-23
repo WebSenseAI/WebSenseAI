@@ -8,6 +8,9 @@ export class ChatBubble extends LitElement {
         overflow: auto;
         padding-top: 10px;
     }
+    .chat-bubble--container::-webkit-scrollbar {
+        display: none;
+    }
     .chat-bubble.rigth{
         background-color: #4629F2;
         color: white;

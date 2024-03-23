@@ -1,4 +1,5 @@
 import { html, css, LitElement } from "lit";
+import { property } from "lit/decorators.js";
 
 export class OpenButton extends LitElement {
   static styles = css`
@@ -6,10 +7,11 @@ export class OpenButton extends LitElement {
         position: fixed;
         bottom: 20px;
         right: 20px;
-        width: 70px;
-        height: 70px;
+        width: 60px;
+        height: 60px;
         background-image: url(../../assets/open-button.png);
         background-size: cover;
+        cursor: pointer;
     }
     .open-button--counter {
       float: right;
@@ -24,8 +26,12 @@ export class OpenButton extends LitElement {
       border: 2px solid white;
       transform: translate(20%, -20%);
     }
+    .open {
+      display: none;
+    } 
   `;
 
+  @property({ type: String }) isOpen = false;
 
   handleClick() {
     const event = new CustomEvent('toggle-open-popup', {
@@ -33,14 +39,20 @@ export class OpenButton extends LitElement {
       bubbles: true,
       composed: true
     });
-
     this.dispatchEvent(event);
+  }
+
+  constructor() {
+    super();
+    window.addEventListener('toggle-open-popup', () => {
+      this.isOpen = !this.isOpen;
+    })
   }
 
 
   render() {
     return html`
-      <div @click="${this.handleClick}" class="open-button">
+      <div @click="${this.handleClick}" class="open-button ${this.isOpen ? 'open' : ''}">
         <span class="open-button--counter">1</span>
       </div>
     `;

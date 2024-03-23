@@ -1,0 +1,3 @@
+HOW TO START PROJECT -> 
+    FE = cd web-sense -> npm i -> npm start 
+    BE = cd web-sense -> . .venv/bin/activate -> flask --app main ru

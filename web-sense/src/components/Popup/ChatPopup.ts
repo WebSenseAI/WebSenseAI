@@ -13,14 +13,26 @@ export class ChatPopup extends LitElement {
         border-radius: 20px;
         display: none;
         z-index: 1000;
+        transform: translateY(-20px);
     }
+
     .chat-popup.open{
         display: block;
+        animation: myAnimation 2s; 
+    }
+
+    @keyframes myAnimation {
+      from {
+        transform: translateY(-20);
+      }
+      to {
+        transform: translateY(0px);
+      }
     }
   `;
   @property({ type: Boolean }) // Declare isPopupOpen as a property
   isPopupOpen: boolean = false; // Initialize isPopupOpen
-  
+
   togglePopup() {
     this.isPopupOpen = !this.isPopupOpen;
   }
@@ -35,7 +47,7 @@ export class ChatPopup extends LitElement {
 
   render() {
     return html`
-      <div class="chat-popup ${this.isPopupOpen === true ? 'open' : ''}">
+      <div class="chat-popup ${this.isPopupOpen === true ? 'open' : 'close'}">
         <slot></slot>
       </div>
     `;
