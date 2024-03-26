@@ -1,3 +1,4 @@
+import axios from "axios";
 import { html, css, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 
@@ -18,7 +19,7 @@ export class ChatPopup extends LitElement {
 
     .chat-popup.open{
         display: block;
-        animation: myAnimation 1s forwards; 
+        animation: myAnimation .5s forwards; 
     }
 
     @keyframes myAnimation {
@@ -35,6 +36,10 @@ export class ChatPopup extends LitElement {
       }
     }
   `;
+
+  @property({ type: Object })
+  chatData = {};
+
   @property({ type: Boolean }) // Declare isPopupOpen as a property
   isPopupOpen: boolean = false; // Initialize isPopupOpen
 
@@ -42,10 +47,36 @@ export class ChatPopup extends LitElement {
     this.isPopupOpen = !this.isPopupOpen;
   }
 
+  async sendMessage(questions: string) {
+    const result = await axios.get(
+      `http://127.0.0.1:5000//api/${questions}`
+    );
+    const data: string = (<any>result).data;
+    this.chatData = data;
+    this.requestUpdate();
+
+    const event = new CustomEvent('add-response', {
+      detail: {
+        message: data
+      },
+      bubbles: true,
+      composed: true
+    });
+    this.dispatchEvent(event);
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+  }
+
   constructor() {
     super();
     window.addEventListener('toggle-open-popup', () => {
       this.togglePopup();
+    })
+    window.addEventListener('send-message', (e: any) => {
+      this.sendMessage(e.detail.message);
+
     })
     this.isPopupOpen = false;
   }

@@ -18,7 +18,10 @@
     "prepublish": "tsc && npm run analyze -- --exclude dist"
   },
   "dependencies": {
-    "lit": "^2.0.2"
+    "axios": "^1.6.8",
+    "http": "^0.0.1-security",
+    "lit": "^2.0.2",
+    "url": "^0.11.3"
   },
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.4.17",

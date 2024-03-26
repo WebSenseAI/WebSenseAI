@@ -2,7 +2,7 @@ from openai_api.setup import client
 
 
 chat_history = [
-        {"role": "system", "content": "You are a helpful assistant designed to output JSON."},
+        {"role": "system", "content": "You are a helpful assistant designed to help users."},
         {"role": "user", "content": "Who won the world series in 2020?"},
         {"role": "system", "content": "The Los Angeles Dodgers won the World Series in 2020. They defeated the Tampa Bay Rays in six games to claim the title."},
         {"role": "user", "content": "Where was it played?"},

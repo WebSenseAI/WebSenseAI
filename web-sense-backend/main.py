@@ -8,8 +8,8 @@ def main():
     return "<p>Hello, World!</p>"
 
 
-@app.route("/api")
-def api_route():
-    answer = generate_chat_completion("Who was the MVP of the 2020 World Series?")
+@app.route("/api/<jsdata>")
+def api_route(jsdata):
+    answer = generate_chat_completion(jsdata)
     print(answer.content)
     return answer.content

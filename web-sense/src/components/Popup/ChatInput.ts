@@ -1,7 +1,8 @@
 import { html, css, LitElement } from "lit";
+import { ref, createRef, Ref } from 'lit/directives/ref.js';
 
 export class ChatInput extends LitElement {
-    static styles = css`
+  static styles = css`
     .chat-input {
         width: 100%;
         box-sizing: border-box;
@@ -33,12 +34,33 @@ export class ChatInput extends LitElement {
     }
   `;
 
-    render() {
-        return html`
+  inputChatRef: Ref<HTMLInputElement> = createRef();
+
+  handleClick() {
+    const event = new CustomEvent('send-message', {
+      detail: { 
+        message: this.inputChatRef.value?.value
+       },
+      bubbles: true,
+      composed: true
+    });
+    this.dispatchEvent(event);
+    this.inputChatRef.value!.value = '';
+  }
+
+  // send message on click of return key
+  handleKeyPress(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      this.handleClick();
+    }
+  }
+
+  render() {
+    return html`
       <div class="chat-input">
-        <input class="chat-input--input" type="text" placeholder="Reply...">
-        <button class="chat-input--button">></button>
+        <input class="chat-input--input" type="text" placeholder="Reply..."  ${ref(this.inputChatRef)} @keydown=${this.handleKeyPress}>
+        <button @click="${this.handleClick}" class="chat-input--button">></button>
       </div>
     `;
-    }
+  }
 }

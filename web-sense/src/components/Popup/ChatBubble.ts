@@ -38,45 +38,39 @@ export class ChatBubble extends LitElement {
     }
     `;
 
+
     items = [
         {
             id: 1,
-            text: 'Hello, how are you doing?',
-            sender: 'user',
-        },
-        {
-            id: 2,
-            text: "I'm doing well, thank you! How can I help you today?",
+            text: '👋 Welcome! I\'m here to help you with any questions you have. Just ask away!',
             sender: 'bot',
-        },
-        {
-            id: 3,
-            text: "I'm looking for a new laptop. Can you help me with that?",
-            sender: 'user',
-        },
-        {
-            id: 4,
-            text: "Of course! What's your budget?",
-            sender: 'bot',
-        },
-        {
-            id: 5,
-            text: "I'm looking for something around $1000.",
-            sender: 'user',
-        },
-        {
-            id: 6,
-            text: "Great! I'll find some options for you. Give me a second.",
-            sender: 'bot',
-        },
+        }
     ];
+
+
+    constructor() {
+        super();
+        window.addEventListener('send-message', (e: any) => {
+            this.items.push({
+                id: this.items.length + 1,
+                text: e.detail.message,
+                sender: 'user',
+            });
+            this.requestUpdate();
+        })
+        window.addEventListener('add-response', (e: any) => {
+            this.items.push({
+                id: this.items.length + 1,
+                text: e.detail.message,
+                sender: 'bot',
+            });
+            this.requestUpdate();
+        });
+    }
 
     render() {
         return html`
         <div class="chat-bubble--container">
-            <div class="chat-bubble left">
-                <p>👋 Welcome! I'm here to help you with any questions you have. Just ask away!</p>
-            </div>
             ${map(this.items, (i) => html`
                 <div class="chat-bubble ${i.sender === 'user' ? 'rigth' : 'left'}">
                     <p>${i.text}</p>

@@ -1,3 +1,3 @@
 HOW TO START PROJECT -> 
     FE = cd web-sense -> npm i -> npm start 
-    BE = cd web-sense -> . .venv/bin/activate -> flask --app main ru
+    BE = cd web-sense -> . .venv/bin/activate -> export OPENAI_API_KEY=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 -> flask --app main run
