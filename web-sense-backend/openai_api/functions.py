@@ -22,3 +22,18 @@ def generate_chat_completion(question: str):
     # Add chat completion to chat history
     chat_history.append({"role": "system", "content": chat_completion})
     return response.choices[0].message
+
+def embedding(question: str):
+    chat_history.append({"role": "user", "content": question})
+    
+    response = client.chat.completions.create(
+        model="ft:gpt-3.5-turbo-1106:personal::976OHfOq",
+        messages=chat_history,
+        max_tokens=50
+    )
+    chat_completion = response.choices[0].message.content
+    
+    # Add chat completion to chat history
+    chat_history.append({"role": "system", "content": chat_completion})
+    print(response.choices[0].message)
+    return response.choices[0].message
