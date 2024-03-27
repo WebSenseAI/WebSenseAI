@@ -19,6 +19,19 @@ def dot_product(vector1, vector2):
     return sum(i*j for i, j in zip(vector1, vector2))
     
     
+def getAllDbVectors(table, conn):
+    cursor = conn.cursor()
+
+    cursor.execute(    
+        f"SELECT text, vector FROM {table}"
+    )
+    
+    # Fetch all vectors from the table
+    vectors = cursor.fetchall()
+    conn.close()
+    return vectors
+
+
 def GetSimilarVectors(table, vector, conn):
     cursor = conn.cursor()
 

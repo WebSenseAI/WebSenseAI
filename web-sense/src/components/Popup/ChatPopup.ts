@@ -49,7 +49,7 @@ export class ChatPopup extends LitElement {
 
   async sendMessage(questions: string) {
     const result = await axios.get(
-      `http://127.0.0.1:5000/api/${questions}`
+      `https://luisbeqjamw.pythonanywhere.com/api/${questions}`
     );
     const data: string = (<any>result).data;
     this.chatData = data;

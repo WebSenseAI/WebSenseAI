@@ -1,6 +1,9 @@
 from peewee import Model, SqliteDatabase, CharField
+from os import path
 
-db = SqliteDatabase('./database/vector.db')
+ROOT = path.dirname(path.realpath(__file__))
+
+db = SqliteDatabase(path.join(ROOT, "vector.db"))
 
 class User(Model):
     username = CharField(unique=True)
