@@ -11,3 +11,6 @@ HOW TO START PROJECT ->
         -> pip install -r requirements.txt
         -> export OPENAI_API_KEY=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 
         -> flask --app main run
+
+
+Langchain=ls__4add14e10191458c96c2b53d30369dfa
