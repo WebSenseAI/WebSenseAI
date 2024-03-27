@@ -4,7 +4,7 @@ from langchain_openai import OpenAIEmbeddings
 from database.functions import (AddVectorToTable, GetSimilarVectors)
 from database.connection import db
 
-embeddings_model = OpenAIEmbeddings(openai_api_key=os.getenv('OPENAI_API_KEY'))
+embeddings_model = OpenAIEmbeddings(openai_api_key="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")
 
 def returnConentMap(n):
         return n.page_content
