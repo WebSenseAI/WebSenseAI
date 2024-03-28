@@ -19,8 +19,6 @@ export class WebSense extends LitElement {
 
   render() {
     return html`
-      <h2>${this.header} Nr. ${this.counter}!</h2>
-      <button @click=${this.__increment}>increment</button>
       <chat-popup>
         <chat-header header="WebSenseAI"></chat-header>
         <chat-bubble></chat-bubble>

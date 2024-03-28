@@ -1,5 +1,6 @@
 import { html, css, LitElement } from "lit";
 import { property } from "lit/decorators.js";
+const bgSvgUrl = new URL('../../assets/open-button.png', import.meta.url).toString();
 
 export class OpenButton extends LitElement {
   static styles = css`
@@ -9,7 +10,6 @@ export class OpenButton extends LitElement {
         right: 20px;
         width: 60px;
         height: 60px;
-        background-image: url(../../assets/open-button.png);
         background-size: cover;
         cursor: pointer;
     }
@@ -41,7 +41,6 @@ export class OpenButton extends LitElement {
     });
     this.dispatchEvent(event);
   }
-
   constructor() {
     super();
     window.addEventListener('toggle-open-popup', () => {
@@ -52,8 +51,9 @@ export class OpenButton extends LitElement {
 
   render() {
     return html`
+      <style> .open-button { background-image: url(${bgSvgUrl}) } </style> 
       <div @click="${this.handleClick}" class="open-button ${this.isOpen ? 'open' : ''}">
-        <span class="open-button--counter">1</span>
+        <!-- <span class="open-button--counter">1</span> -->
       </div>
     `;
   }

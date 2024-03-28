@@ -32,6 +32,7 @@ export class ChatBubble extends LitElement {
         float: left;
         font-size: 14px;
         max-width: 70%;
+        text-align: left;
     }
     p {
         margin: 0;
