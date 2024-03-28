@@ -18,6 +18,7 @@ export class ChatInput extends LitElement {
         font-size: 16px;
         box-sizing: border-box;
         border-radius: 0 0 0 20px;
+        color: #000000;
     }
     .chat-input--input:focus-visible {
         outline-offset: 0px;

@@ -20,6 +20,7 @@ export class ChatBubble extends LitElement {
         border-radius: 20px 20px 0px 20px;
         float: right;
         max-width: 70%;
+        text-align: right;
         font-size: 14px;
     }
     .chat-bubble.left{
@@ -45,9 +46,14 @@ export class ChatBubble extends LitElement {
             id: 1,
             text: '👋 Welcome! I\'m here to help you with any questions you have. Just ask away!',
             sender: 'bot',
-        }
+        },
     ];
 
+    scrollChat() {
+        setTimeout(() => {
+            this.renderRoot.querySelector('.chat-bubble--container')?.scrollTo({ top: this.renderRoot.querySelector('.chat-bubble--container')?.scrollHeight, behavior: 'smooth' })
+        }, 100);
+    }
 
     constructor() {
         super();
@@ -57,6 +63,8 @@ export class ChatBubble extends LitElement {
                 text: e.detail.message,
                 sender: 'user',
             });
+
+            this.scrollChat();
             this.requestUpdate();
         })
         window.addEventListener('add-response', (e: any) => {
@@ -65,6 +73,7 @@ export class ChatBubble extends LitElement {
                 text: e.detail.message,
                 sender: 'bot',
             });
+            this.scrollChat();
             this.requestUpdate();
         });
     }
