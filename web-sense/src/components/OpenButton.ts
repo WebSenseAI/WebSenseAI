@@ -1,6 +1,6 @@
 import { html, css, LitElement } from "lit";
 import { property } from "lit/decorators.js";
-const bgSvgUrl = new URL('../../assets/open-button.png', import.meta.url).toString();
+const bgSvgUrl = new URL('/node_modules/@luisbeqja/web-sense/dist/assets/open-button.png', import.meta.url).toString();
 
 export class OpenButton extends LitElement {
   static styles = css`

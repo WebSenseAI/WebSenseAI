@@ -1,8 +1,8 @@
 import { html, css, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 
-const closeIcon = new URL('../../../assets/close-icon.svg', import.meta.url).toString();
-const headerBg = new URL('../../../assets/header-bg.png', import.meta.url).toString();
+const closeIcon = new URL('/node_modules/@luisbeqja/web-sense/dist/assets/close-icon.svg', import.meta.url).toString();
+const headerBg = new URL('/node_modules/@luisbeqja/web-sense/dist/assets/header-bg.png', import.meta.url).toString();
 
 export class ChatHeader extends LitElement {
   static styles = css`
@@ -39,7 +39,10 @@ export class ChatHeader extends LitElement {
   `;
 
   @property({ type: String }) header = "";
-
+  constructor() {
+    super();
+    console.log(closeIcon);
+  }
   handleClick() {
     const event = new CustomEvent('toggle-open-popup', {
       detail: { /* Optional event details */ },
