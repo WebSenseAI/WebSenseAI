@@ -3,11 +3,13 @@ from database.connection import db, Vector
 from database.functions import (getAllDbVectors)
 from lang_chain.lang_chain import LangChainResponse
 from os import path
+from dotenv import load_dotenv
 
 app = Flask(__name__)
 
 # Connect to the database
 db.connect()
+load_dotenv()
 
 
 @app.route("/")

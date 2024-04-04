@@ -12,14 +12,15 @@ import os
 
 # The template prompt that will be used to generate the prompt
 PROMPT = """
-    Use the following pieces of context to answer the question at the end. Only If you don't know the answer, just say that you don't know and that the user can check on the website, don't try to make up an answer.
-    never mention the context in the answer, just use it to generate the answer.
-    be friendly and a bit funny.
-
+    You are and AI chatbot assistant of a website you have help users with their questions about the site. 
+    You are given a context from the website and a user input. You need to provide a helpful answer to the user input based on the context.
+    be funny but also helpful. 
+    short and concise.
+    
     CONTEXT:
     {CONTEXT}
 
-    Question: {QUESTION}
+    User Input: {QUESTION}
     Helpful Answer: """
 
 
@@ -38,6 +39,7 @@ def LangChainResponse(question: str):
         messages=[message]
     )
     chat_propmt_with_values = chat_propmt.format_prompt(CONTEXT=similarContextSum, QUESTION=question)
+    print(question)
     response = llm.invoke(chat_propmt_with_values.to_messages())
     
     return response.content

@@ -46,10 +46,11 @@ export class ChatPopup extends LitElement {
   togglePopup() {
     this.isPopupOpen = !this.isPopupOpen;
   }
-
+  
+  //https://luisbeqjamw.pythonanywhere.com
   async sendMessage(questions: string) {
     const result = await axios.get(
-      `https://luisbeqjamw.pythonanywhere.com/api/${questions}`
+      `http://127.0.0.1:5000//api/${questions}`
     );
     const data: string = (<any>result).data;
     this.chatData = data;

@@ -39,6 +39,7 @@ export class ChatInput extends LitElement {
   inputChatRef: Ref<HTMLInputElement> = createRef();
 
   handleClick() {
+    if (this.inputChatRef.value?.value === '') return;
     const event = new CustomEvent('send-message', {
       detail: { 
         message: this.inputChatRef.value?.value
