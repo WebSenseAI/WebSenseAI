@@ -2,11 +2,3 @@ HOW TO START PROJECT ->
     FE = cd web-sense 
         -> npm i 
         -> npm start 
-
-    --------------------------------
-
-    BE = cd web-sense -> 
-        -> python3 -m venv .venv
-        -> . .venv/bin/activate 
-        -> pip install -r requirements.txt
-        -> flask --app main run
