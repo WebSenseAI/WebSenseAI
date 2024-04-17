@@ -9,17 +9,12 @@ export class WebSense extends LitElement {
     }
   `;
 
-  @property({ type: String }) header = 'Hey there';
+  @property({ type: String }) id = '';
 
-  @property({ type: Number }) counter = 5;
-
-  __increment() {
-    this.counter += 1;
-  }
 
   render() {
     return html`
-      <chat-popup>
+      <chat-popup key=${this.id} >
         <chat-header header="WebSenseAI"></chat-header>
         <chat-bubble></chat-bubble>
         <chat-input></chat-input>
