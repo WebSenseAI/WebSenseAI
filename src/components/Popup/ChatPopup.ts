@@ -43,14 +43,22 @@ export class ChatPopup extends LitElement {
   @property({ type: Boolean }) // Declare isPopupOpen as a property
   isPopupOpen: boolean = false; // Initialize isPopupOpen
 
+  @property({ type: String }) // Declare isPopupOpen as a property
+  key: string = ''; // Initialize isPopupOpen
+
   togglePopup() {
     this.isPopupOpen = !this.isPopupOpen;
   }
-  
-  //https://luisbeqjamw.pythonanywhere.com
-  async sendMessage(questions: string) {
+
+  //https://websense-backend-production.up.railway.app
+  async sendMessage(questions: string, key: string) {
     const result = await axios.get(
-      `http://127.0.0.1:5000/api/${questions}`
+      `http://127.0.0.1:5000/api/response/get/${key}`,
+      {
+        params: {
+          question: questions
+        }
+      }
     );
     const data: string = (<any>result).data;
     this.chatData = data;
@@ -76,7 +84,7 @@ export class ChatPopup extends LitElement {
       this.togglePopup();
     })
     window.addEventListener('send-message', (e: any) => {
-      this.sendMessage(e.detail.message);
+      this.sendMessage(e.detail.message, this.key);
 
     })
     this.isPopupOpen = false;

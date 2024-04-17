@@ -1,1 +1,1 @@
-export { WebSense } from './WebSense.js';
+export { WebSense } from './WebSense';
