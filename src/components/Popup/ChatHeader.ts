@@ -39,6 +39,7 @@ export class ChatHeader extends LitElement {
   `;
 
   @property({ type: String }) header = "";
+  @property({ type: String }) description = "A live chat interface, here to help you get to know our blog better, in a funny way! 😄";
   constructor() {
     super();
     console.log(closeIcon);
@@ -60,7 +61,7 @@ export class ChatHeader extends LitElement {
       <div class="chat-header">
         <img @click="${this.handleClick}" class="chat-header__close" src="${closeIcon}" alt="WebSense AI Logo" />
         <h1 class="chat-header__title" >${this.header}</h1>
-        <p class="chat-header__sub-title">A live chat interface, here to help you get to know our blog better, in a funny way! 😄</p>
+        <p class="chat-header__sub-title">${this.description}</p>
       </div>
     `;
   }

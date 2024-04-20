@@ -1,4 +1,5 @@
 import { html, css, LitElement } from "lit";
+import { property } from "lit/decorators.js";
 import { map } from 'lit/directives/map.js';
 
 export class ChatBubble extends LitElement {
@@ -39,16 +40,15 @@ export class ChatBubble extends LitElement {
         margin: 0;
     }
     `;
-
+    @property({ type: String }) firstMessage = "";
 
     items = [
         {
             id: 1,
-            text: '👋 Welcome! I\'m here to help you with any questions you have. Just ask away!',
+            text: this.firstMessage,
             sender: 'bot',
         },
     ];
-
     scrollChat() {
         setTimeout(() => {
             this.renderRoot.querySelector('.chat-bubble--container')?.scrollTo({ top: this.renderRoot.querySelector('.chat-bubble--container')?.scrollHeight, behavior: 'smooth' })
