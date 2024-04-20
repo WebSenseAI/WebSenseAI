@@ -28,7 +28,7 @@ export class WebSense extends LitElement {
     const response = await axios.get(`https://websense-backend-production.up.railway.app/api/info/bot/${this.id}`); // Add the URL of the backend
     const data = response.data;
     this.botInfo = data;
-    console.log(data);
+    console.log(this.botInfo);
   }
 
 
@@ -36,7 +36,7 @@ export class WebSense extends LitElement {
     return html`
       <chat-popup key=${this.id} >
         <chat-header header=${this.botInfo.name} description=${this.botInfo.description}></chat-header>
-        <chat-bubble first-message=${this.botInfo.message}></chat-bubble>
+        <chat-bubble firstmessage=${this.botInfo.message}></chat-bubble>
         <chat-input></chat-input>
       </chat-popup>
       <open-button></open-button>

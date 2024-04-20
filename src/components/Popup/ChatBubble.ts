@@ -2,6 +2,13 @@ import { html, css, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 import { map } from 'lit/directives/map.js';
 
+
+interface ChatBubbleItem {
+    id: number;
+    text: string;
+    sender: 'user' | 'bot';
+}
+
 export class ChatBubble extends LitElement {
     static styles = css`
     .chat-bubble--container {
@@ -40,16 +47,13 @@ export class ChatBubble extends LitElement {
         margin: 0;
     }
     `;
-    @property({ type: String }) firstMessage = "";
+    @property({ type: String }) firstmessage = "";
 
-    items = [
-        {
-            id: 1,
-            text: this.firstMessage,
-            sender: 'bot',
-        },
-    ];
+
+    items: ChatBubbleItem[] = [];
+
     scrollChat() {
+        console.log('scrolling', this.items);
         setTimeout(() => {
             this.renderRoot.querySelector('.chat-bubble--container')?.scrollTo({ top: this.renderRoot.querySelector('.chat-bubble--container')?.scrollHeight, behavior: 'smooth' })
         }, 100);
@@ -81,6 +85,9 @@ export class ChatBubble extends LitElement {
     render() {
         return html`
         <div class="chat-bubble--container">
+            <div class="chat-bubble left">
+                <p>${this.firstmessage}</p>
+            </div>  
             ${map(this.items, (i) => html`
                 <div class="chat-bubble ${i.sender === 'user' ? 'rigth' : 'left'}">
                     <p>${i.text}</p>
