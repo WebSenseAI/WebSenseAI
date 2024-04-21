@@ -53,7 +53,7 @@ export class ChatPopup extends LitElement {
   //https://websense-backend-production.up.railway.app
   async sendMessage(questions: string, key: string) {
     const result = await axios.get(
-      `http://127.0.0.1:5000/api/response/get/${key}`,
+      `https://websense-backend-production.up.railway.app/api/response/get/${key}`,
       {
         params: {
           question: questions
