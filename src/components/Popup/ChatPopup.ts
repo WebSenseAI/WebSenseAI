@@ -1,7 +1,7 @@
 import axios from "axios";
 import { html, css, LitElement } from "lit";
 import { property } from "lit/decorators.js";
-
+import { SERVER_URL } from "../../utils";
 export class ChatPopup extends LitElement {
   static styles = css`
     .chat-popup {
@@ -50,10 +50,9 @@ export class ChatPopup extends LitElement {
     this.isPopupOpen = !this.isPopupOpen;
   }
 
-  //https://websense-backend-production.up.railway.app
   async sendMessage(questions: string, key: string) {
     const result = await axios.get(
-      `https://websense-backend-production.up.railway.app/api/response/get/${key}`,
+      `${SERVER_URL}/api/response/get/${key}`,
       {
         params: {
           question: questions

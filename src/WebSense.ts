@@ -2,7 +2,7 @@ import { html, css, LitElement } from 'lit';
 import { property } from 'lit/decorators.js';
 import './component.js';
 import axios from "axios";
-
+import { SERVER_URL } from './utils';
 export class WebSense extends LitElement {
   static styles = css`
     * {
@@ -25,7 +25,7 @@ export class WebSense extends LitElement {
 
   /* Fetch info */
   async firstUpdated() {
-    const response = await axios.get(`https://websense-backend-production.up.railway.app/api/info/bot/${this.id}`); // Add the URL of the backend
+    const response = await axios.get(`${SERVER_URL}/api/info/bot/${this.id}`); // Add the URL of the backend
     const data = response.data;
     this.botInfo = data;
     console.log(this.botInfo);
