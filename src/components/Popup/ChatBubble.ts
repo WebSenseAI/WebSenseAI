@@ -11,6 +11,10 @@ interface ChatBubbleItem {
 
 export class ChatBubble extends LitElement {
     static styles = css`
+    .full {
+        width: 100%;
+        display: flex;
+    }
     .chat-bubble--container {
         height: 400px;
         overflow: auto;
@@ -51,6 +55,7 @@ export class ChatBubble extends LitElement {
 
 
     items: ChatBubbleItem[] = [];
+    isBotTyping = false;
 
     scrollChat() {
         console.log('scrolling', this.items);
@@ -62,6 +67,7 @@ export class ChatBubble extends LitElement {
     constructor() {
         super();
         window.addEventListener('send-message', (e: any) => {
+            this.isBotTyping = true;
             this.items.push({
                 id: this.items.length + 1,
                 text: e.detail.message,
@@ -72,6 +78,7 @@ export class ChatBubble extends LitElement {
             this.requestUpdate();
         })
         window.addEventListener('add-response', (e: any) => {
+            this.isBotTyping = false;
             this.items.push({
                 id: this.items.length + 1,
                 text: e.detail.message,
@@ -93,6 +100,14 @@ export class ChatBubble extends LitElement {
                     <p>${i.text}</p>
                 </div>  
             `)}
+            ${this.isBotTyping ? html`
+                <div class="full">
+                    <div class="chat-bubble left">
+                        <chat-bubble-typing></chat-bubble-typing>
+                    </div>
+                </div>
+            ` : html``
+            }
         </div>
     `;
     }
