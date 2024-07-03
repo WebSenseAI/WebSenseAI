@@ -1,16 +1,82 @@
+import { __decorate } from "tslib";
 import { html, css, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 import { map } from 'lit/directives/map.js';
-
-
-interface ChatBubbleItem {
-    id: number;
-    text: string;
-    sender: 'user' | 'bot';
-}
-
 export class ChatBubble extends LitElement {
-    static styles = css`
+    scrollChat() {
+        console.log('scrolling', this.items);
+        setTimeout(() => {
+            var _a, _b;
+            (_a = this.renderRoot.querySelector('.chat-bubble--container')) === null || _a === void 0 ? void 0 : _a.scrollTo({ top: (_b = this.renderRoot.querySelector('.chat-bubble--container')) === null || _b === void 0 ? void 0 : _b.scrollHeight, behavior: 'smooth' });
+        }, 100);
+    }
+    splitString(input) {
+        const parts = input.split('/n/');
+        return parts;
+    }
+    async processMessage(m, delay) {
+        this.isBotTyping = true;
+        this.requestUpdate();
+        return new Promise(resolve => {
+            setTimeout(() => {
+                this.items.push({
+                    id: this.items.length + 1,
+                    text: m,
+                    sender: 'bot',
+                });
+                resolve(null);
+                this.isBotTyping = false;
+                this.scrollChat();
+                this.requestUpdate();
+            }, delay); // 1000 ms delay
+        });
+    }
+    constructor() {
+        super();
+        this.firstmessage = "";
+        this.items = [];
+        this.isBotTyping = false;
+        window.addEventListener('send-message', (e) => {
+            this.isBotTyping = true;
+            this.items.push({
+                id: this.items.length + 1,
+                text: e.detail.message,
+                sender: 'user',
+            });
+            this.scrollChat();
+            this.requestUpdate();
+        });
+        window.addEventListener('add-response', async (e) => {
+            const messages = this.splitString(e.detail.message);
+            for (let i = 0; i < messages.length; i++) {
+                const delay = i === 0 ? 0 : 1000;
+                await this.processMessage(messages[i], delay);
+            }
+        });
+    }
+    render() {
+        return html `
+        <div class="chat-bubble--container">
+            <div class="chat-bubble left">
+                <p>${this.firstmessage}</p>
+            </div>  
+            ${map(this.items, (i) => html `
+                <div class="chat-bubble ${i.sender === 'user' ? 'rigth' : 'left'}">
+                    <p>${i.text}</p>
+                </div>  
+            `)}
+            ${this.isBotTyping ? html `
+                <div class="full">
+                    <div class="chat-bubble left">
+                        <chat-bubble-typing></chat-bubble-typing>
+                    </div>
+                </div>
+            ` : html ``}
+        </div>
+    `;
+    }
+}
+ChatBubble.styles = css `
     .full {
         width: 100%;
         display: flex;
@@ -51,85 +117,7 @@ export class ChatBubble extends LitElement {
         margin: 0;
     }
     `;
-    @property({ type: String }) firstmessage = "";
-
-
-    items: ChatBubbleItem[] = [];
-    isBotTyping = false;
-
-    scrollChat() {
-        console.log('scrolling', this.items);
-        setTimeout(() => {
-            this.renderRoot.querySelector('.chat-bubble--container')?.scrollTo({ top: this.renderRoot.querySelector('.chat-bubble--container')?.scrollHeight, behavior: 'smooth' })
-        }, 100);
-    }
-
-    splitString(input: string) {
-        const parts = input.split('/n/');
-        return parts;
-    }
-
-
-    async processMessage(m: string, delay: number) {
-        this.isBotTyping = true;
-        this.requestUpdate();
-        return new Promise(resolve => {
-            setTimeout(() => {
-                this.items.push({
-                    id: this.items.length + 1,
-                    text: m,
-                    sender: 'bot',
-                });
-                resolve(null);
-                this.isBotTyping = false;
-                this.scrollChat();
-                this.requestUpdate();
-            }, delay); // 1000 ms delay
-        });
-    }
-
-    constructor() {
-        super();
-        window.addEventListener('send-message', (e: any) => {
-            this.isBotTyping = true;
-            this.items.push({
-                id: this.items.length + 1,
-                text: e.detail.message,
-                sender: 'user',
-            });
-
-            this.scrollChat();
-            this.requestUpdate();
-        })
-        window.addEventListener('add-response', async (e: any) => {
-            const messages = this.splitString(e.detail.message);
-            for (let i = 0; i < messages.length; i++) {
-                const delay = i === 0 ? 0 : 1000;
-                await this.processMessage(messages[i], delay);
-            }
-        });
-    }
-
-    render() {
-        return html`
-        <div class="chat-bubble--container">
-            <div class="chat-bubble left">
-                <p>${this.firstmessage}</p>
-            </div>  
-            ${map(this.items, (i) => html`
-                <div class="chat-bubble ${i.sender === 'user' ? 'rigth' : 'left'}">
-                    <p>${i.text}</p>
-                </div>  
-            `)}
-            ${this.isBotTyping ? html`
-                <div class="full">
-                    <div class="chat-bubble left">
-                        <chat-bubble-typing></chat-bubble-typing>
-                    </div>
-                </div>
-            ` : html``
-            }
-        </div>
-    `;
-    }
-}
+__decorate([
+    property({ type: String })
+], ChatBubble.prototype, "firstmessage", void 0);
+//# sourceMappingURL=ChatBubble.js.map
