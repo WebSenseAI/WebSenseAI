@@ -15,7 +15,7 @@ npm i @luisbeqja/web-sense
   import '@luisbeqja/web-sense/web-sense.js';
 </script>
 
-<web-sense></web-sense>
+<web-sense id="your_bot_id" />
 ```
 
 
