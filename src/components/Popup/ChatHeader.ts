@@ -2,7 +2,7 @@ import { html, css, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 
 const closeIcon = new URL('/node_modules/@luisbeqja/web-sense/dist/assets/close-icon.svg', import.meta.url).toString();
-const headerBg = new URL('/wp/wp-content/uploads/2024/06/header-bg.png', import.meta.url).toString();
+const headerBg = new URL('/node_modules/@luisbeqja/web-sense/dist/assets/header-bg.png', import.meta.url).toString();
 
 export class ChatHeader extends LitElement {
   static styles = css`
