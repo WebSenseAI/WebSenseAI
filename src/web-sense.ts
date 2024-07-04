@@ -1,3 +1,3 @@
-import { WebSense } from './WebSense.js';
+import { WebSense } from './WebSense';
 
 window.customElements.define('web-sense', WebSense);

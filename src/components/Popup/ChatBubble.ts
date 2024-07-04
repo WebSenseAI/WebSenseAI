@@ -40,7 +40,7 @@ export class ChatBubble extends LitElement {
         color: black;
         width: fit-content;    
         padding: 10px 15px;
-        margin: 10px 15px;
+        margin: 5px 15px;
         border-radius: 0px 20px 20px 20px;
         float: left;
         font-size: 14px;
@@ -64,6 +64,30 @@ export class ChatBubble extends LitElement {
         }, 100);
     }
 
+    splitString(input: string) {
+        const parts = input.split('/n/');
+        return parts;
+    }
+
+
+    async processMessage(m: string, delay: number) {
+        this.isBotTyping = true;
+        this.requestUpdate();
+        return new Promise(resolve => {
+            setTimeout(() => {
+                this.items.push({
+                    id: this.items.length + 1,
+                    text: m,
+                    sender: 'bot',
+                });
+                resolve(null);
+                this.isBotTyping = false;
+                this.scrollChat();
+                this.requestUpdate();
+            }, delay); // 1000 ms delay
+        });
+    }
+
     constructor() {
         super();
         window.addEventListener('send-message', (e: any) => {
@@ -77,15 +101,12 @@ export class ChatBubble extends LitElement {
             this.scrollChat();
             this.requestUpdate();
         })
-        window.addEventListener('add-response', (e: any) => {
-            this.isBotTyping = false;
-            this.items.push({
-                id: this.items.length + 1,
-                text: e.detail.message,
-                sender: 'bot',
-            });
-            this.scrollChat();
-            this.requestUpdate();
+        window.addEventListener('add-response', async (e: any) => {
+            const messages = this.splitString(e.detail.message);
+            for (let i = 0; i < messages.length; i++) {
+                const delay = i === 0 ? 0 : 1000;
+                await this.processMessage(messages[i], delay);
+            }
         });
     }
 

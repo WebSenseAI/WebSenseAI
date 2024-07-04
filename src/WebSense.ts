@@ -3,6 +3,8 @@ import { property } from 'lit/decorators.js';
 import './component.js';
 import axios from "axios";
 import { SERVER_URL } from './utils';
+
+console.log('WebSense component script loaded WEBSENSE');
 export class WebSense extends LitElement {
   static styles = css`
     * {
@@ -31,15 +33,18 @@ export class WebSense extends LitElement {
     console.log(this.botInfo);
   }
 
-
   render() {
+    console.log('WebSense component script loaded RENDER');
     return html`
-      <chat-popup key=${this.id} >
+    <div>
+      <chat-popup key=${this.id}>
         <chat-header header=${this.botInfo.name} description=${this.botInfo.description}></chat-header>
         <chat-bubble firstmessage=${this.botInfo.message}></chat-bubble>
         <chat-input></chat-input>
       </chat-popup>
-      <open-button></open-button>
+      <open-button>
+      </open-button>
+    </div>
     `;
   }
 }
