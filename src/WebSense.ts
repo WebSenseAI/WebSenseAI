@@ -48,5 +48,3 @@ export class WebSense extends LitElement {
     `;
   }
 }
-
-/* window.customElements.define('web-sense', WebSense); */

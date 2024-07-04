@@ -1,1 +1,0 @@
-{"version":3,"file":"utils.js","sourceRoot":"","sources":["../../src/utils.ts"],"names":[],"mappings":"AAAA,MAAM,CAAC,MAAM,UAAU,GAAG,QAAQ,CAAC,QAAQ,KAAK,WAAW,CAAC,CAAC,CAAC,uBAAuB,CAAC,CAAC,CAAC,oDAAoD,CAAC","sourcesContent":["export const SERVER_URL = location.hostname === \"localhost\" ? \"http://localhost:5000\" : \"https://websense-backend-production.up.railway.app\";"]}

@@ -1,4 +1,3 @@
-import { WebSense } from './WebSense.js';
+import { WebSense } from './WebSense';
 
-console.log('WebSense component script loaded WEB-SENSE');
 window.customElements.define('web-sense', WebSense);
