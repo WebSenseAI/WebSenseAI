@@ -3,7 +3,7 @@
   "description": "Webcomponent web-sense following open-wc recommendations",
   "license": "MIT",
   "author": "luis beqja",
-  "version": "0.0.17",
+  "version": "0.0.19",
   "type": "module",
   "main": "dist/src/index.js",
   "module": "dist/src/index.js",
@@ -14,9 +14,10 @@
   "scripts": {
     "analyze": "cem analyze --litelement",
     "start": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wds\"",
-    "build": "tsc && npm run analyze -- --exclude dist",
+    "build": "tsc && npm run analyze -- --exclude dist && npm run copy-assets",
     "build2": "rollup -c",
-    "prepublish": "tsc && npm run analyze -- --exclude dist"
+    "prepublish": "tsc && npm run analyze -- --exclude dist",
+    "copy-assets": "cp -r src/assets dist/"
   },
   "dependencies": {
     "@luisbeqja/web-sense": "^0.0.11",
