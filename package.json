@@ -3,7 +3,7 @@
   "description": "Webcomponent web-sense following open-wc recommendations",
   "license": "MIT",
   "author": "luis beqja",
-  "version": "0.0.19",
+  "version": "0.1.0",
   "type": "module",
   "main": "dist/src/index.js",
   "module": "dist/src/index.js",
