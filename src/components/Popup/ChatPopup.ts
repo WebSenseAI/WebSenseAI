@@ -52,10 +52,13 @@ export class ChatPopup extends LitElement {
 
   async sendMessage(questions: string, key: string) {
     // Messagge sende to the server add animation of thinking
+
+
     const result = await axios.get(
-      `${SERVER_URL}/api/response/get/${key}`,
+      `${SERVER_URL}/chat/bot/answer`,
       {
         params: {
+          id: key,
           question: questions
         }
       }

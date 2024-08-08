@@ -19,7 +19,7 @@ export class WebSense extends LitElement {
     description: "",
     id: "",
     key: "",
-    message: "",
+    first_message: "",
     name: "",
     website: ""
   };
@@ -27,7 +27,7 @@ export class WebSense extends LitElement {
 
   /* Fetch info */
   async firstUpdated() {
-    const response = await axios.get(`${SERVER_URL}/api/info/bot/${this.id}`); // Add the URL of the backend
+    const response = await axios.get(`${SERVER_URL}/api/bot/info/${this.id}`); // Add the URL of the backend
     const data = response.data;
     this.botInfo = data;
     console.log(this.botInfo);
@@ -39,7 +39,7 @@ export class WebSense extends LitElement {
     <div>
       <chat-popup key=${this.id}>
         <chat-header header=${this.botInfo.name} description=${this.botInfo.description}></chat-header>
-        <chat-bubble firstmessage=${this.botInfo.message}></chat-bubble>
+        <chat-bubble firstmessage=${this.botInfo.first_message}></chat-bubble>
         <chat-input></chat-input>
       </chat-popup>
       <open-button>
