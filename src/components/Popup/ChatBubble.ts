@@ -58,7 +58,6 @@ export class ChatBubble extends LitElement {
     isBotTyping = false;
 
     scrollChat() {
-        console.log('scrolling', this.items);
         setTimeout(() => {
             this.renderRoot.querySelector('.chat-bubble--container')?.scrollTo({ top: this.renderRoot.querySelector('.chat-bubble--container')?.scrollHeight, behavior: 'smooth' })
         }, 100);

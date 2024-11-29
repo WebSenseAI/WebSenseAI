@@ -2,6 +2,13 @@ import axios from "axios";
 import { html, css, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 import { SERVER_URL } from "../../utils";
+
+interface ChatMessage {
+  sender: 'user' | 'bot';
+  message: string;
+  timestamp: number;
+}
+
 export class ChatPopup extends LitElement {
   static styles = css`
     .chat-popup {
@@ -37,33 +44,72 @@ export class ChatPopup extends LitElement {
     }
   `;
 
+  @property({ type: Array })
+  chatHistory: ChatMessage[] = [];
+
   @property({ type: Object })
   chatData = {};
 
-  @property({ type: Boolean }) // Declare isPopupOpen as a property
-  isPopupOpen: boolean = false; // Initialize isPopupOpen
+  @property({ type: Boolean })
+  isPopupOpen: boolean = false;
 
-  @property({ type: String }) // Declare isPopupOpen as a property
-  key: string = ''; // Initialize isPopupOpen
+  @property({ type: String })
+  key: string = '';
 
   togglePopup() {
     this.isPopupOpen = !this.isPopupOpen;
   }
 
-  async sendMessage(questions: string, key: string) {
-    // Messagge sende to the server add animation of thinking
+  private loadChatHistory() {
+    const storedHistory = localStorage.getItem(`chat_history_${this.key}`);
+    if (storedHistory) {
+      this.chatHistory = JSON.parse(storedHistory);
+    }
+  }
 
+  private saveChatHistory() {
+    localStorage.setItem(`chat_history_${this.key}`, JSON.stringify(this.chatHistory));
+  }
 
-    const result = await axios.get(
-      `${SERVER_URL}/chat/bot/answer`,
-      {
-        params: {
-          id: key,
-          question: questions
+  async sendMessage(question: string, key: string) {
+    // Add user message to history
+    this.chatHistory.push({
+      sender: 'user',
+      message: question,
+      timestamp: Date.now()
+    });
+    this.saveChatHistory();
+
+    
+    let result;
+    try {
+      result = await axios.post(
+        `${SERVER_URL}/chat/bot/answer`,
+        {
+          params: {
+            botid: key,
+            chatid: null,
+            question: question,
+            history: this.chatHistory
+          }
         }
-      }
-    );
+      );
+    } catch (error) {
+      console.error('Error getting chat response:', error);
+      return;
+    }
+
+
     const data: string = (<any>result).data;
+    
+    // Add bot response to history
+    this.chatHistory.push({
+      sender: 'bot',
+      message: data,
+      timestamp: Date.now()
+    });
+    this.saveChatHistory();
+
     this.chatData = data;
     this.requestUpdate();
 
@@ -79,6 +125,7 @@ export class ChatPopup extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
+    this.loadChatHistory();
   }
 
   constructor() {
